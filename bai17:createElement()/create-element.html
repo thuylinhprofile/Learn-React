@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- Những nội dung cần học -->
+    <!-- phần bài 17: tạo phần tử với createElement() -->
+    <!--
+    1. document.createElement()
+    2. document.body.appendChild()
+    3. console.dir()
+    4. innerText, id, className, style
+
+5. Tạo:
+
+    <h1 title="Hello" class="heading">Hello guys!</h1>
+
+6. Tạo:
+
+    <ul>
+        <li>Javascript</li>
+        <li>ReactJS</li>
+    </ul>
+
+7. Tạo:
+
+    <div class="post-item">
+        <h2 title="Học React tại F8">Học ReactJS</h2>
+        <p>Học ReactJS từ cơ bản tới nâng cao</p>
+    </div> -->
+
+    <!-- ví dụ 1 -->
+
+    <!-- <h1 id="heading">test</h1>
+    <script>
+const h1= document.querySelector('#heading');
+console.log(h1);
+    </script> -->
+
+    <!-- ví dụ 2 -->
+    <!-- <div id= "root"> </div> tạo thẻ div có id là root -->
+    <script>
+    // //1. Tạo thẻ h1
+    // const root= document.getElementById('root'); // này để tạo thẻ div có id là root
+    // const h1= document.createElement('h1'); // tạo thẻ h1
+    // //2. Thêm nội dung cho thẻ h1:
+    // h1.innerText='Hello guys' // thêm nội dung cho thẻ h1
+    // h1.id='heading'// thêm id cho thẻ h1
+    // h1.className='test class-2'// thêm class cho thẻ h1
+    //  Object.assign(h1.style, {
+    //     color: 'red',
+    //     backgroundColor: '#333',
+    // })// thêm style cho thẻ h1
+    // h1.style.textAlign='center'; // thêm style cho thẻ h1
+    // //3. Thêm thẻ h1 vào trong thẻ body
+    // document.body.appendChild(h1); // thêm thẻ h1 vào trong thẻ body
+
+    // console.log(h1); // in ra thẻ h1
+
+    // root.appendChild(h1); // thêm thẻ h1 vào trong thẻ root
+
+
+    // <!-- phần bài 17: tạo phần tử với createElement() -->
+    
+//DOM
+// const h1DOM= document.createElement('h1'); // tạo thẻ h1
+// h1DOM.title='Hello' // thêm thuộc tính title cho thẻ h1'
+// h1DOM.innerText='Hello guys' // thêm nội dung cho thẻ h1
+
+// h1DOM.className='heading'// thêm class cho thẻ h1
+//  document.body.appendChild(h1DOM); // thêm thẻ h1 vào trong thẻ body
+//  //React --> React DOM(này sau mới học)
+//   const h1React =React.createElement('h1',{
+//     title:'Hello',
+//     className:'test heading'
+//   },'Hello guys');  // tạo thẻ h1 trong React
+//   console.log(h1React);
+
+
+//   2.so sánh với document.createElement()-> DOM element
+
+
+//   // DOM
+//   const h1DOM = document.createElement('h1')
+
+//   h1DOM.title = 'Hello'
+//   h1DOM.className = 'heading'
+
+//   h1DOM.innerText = 'Hello guys!'
+
+//   document.body.appendChild(h1DOM)
+
+//   // React -> React-DOM
+//   //React.createElement(type, props, children, n)
+//   const h1React = React.createElement('h1', {
+//       title: 'Hello',
+//       className: 'heading'
+//     }, 
+//     'Hello guys!'
+//   )
+
+//   console.dir(h1DOM);
+//   console.log(h1React);
+
+// làm phần 6
+const ulDOM = document.createElement('ul')
+ulDOM.id = 'ul-id'
+ulDOM.style = 'color: blue; background-color: pink;'
+
+const liDOM1 = document.createElement('li')
+liDOM1.innerText = 'Javascript'
+liDOM1.id = 'li-1'
+
+const liDOM2 = document.createElement('li')
+liDOM2.innerText = 'React'
+
+ulDOM.appendChild(liDOM1)
+ulDOM.appendChild(liDOM2)
+document.body.appendChild(ulDOM)
+
+// React
+const ulReact = React.createElement(
+  'ul',
+  { id: 'ul-id', style: { color: 'blue', backgroundColor: 'pink' } },
+  React.createElement('li', { id: 'li-1' }, 'Javascript'),
+  React.createElement('li', {}, 'ReactJS')
+)
+
+console.dir(ulDOM)
+console.log(ulReact)
+
+</script>
+
+</body>
+</html>
+
+ 
