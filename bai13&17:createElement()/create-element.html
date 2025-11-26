@@ -56,11 +56,11 @@ console.log(h1);
     // })// thêm style cho thẻ h1
     // h1.style.textAlign='center'; // thêm style cho thẻ h1
     // //3. Thêm thẻ h1 vào trong thẻ body
-    // document.body.appendChild(h1); // thêm thẻ h1 vào trong thẻ body
+    // document.body.appendChild(h1); // thêm thẻ h1 vào trong thẻ body, kphai dùng root
 
     // console.log(h1); // in ra thẻ h1
 
-    // root.appendChild(h1); // thêm thẻ h1 vào trong thẻ root
+    // root.appendChild(h1); // thêm thẻ h1 vào trong thẻ root mà dùng root
 
 
     // <!-- phần bài 17: tạo phần tử với createElement() -->
@@ -91,7 +91,7 @@ console.log(h1);
 
 //   h1DOM.innerText = 'Hello guys!'
 
-//   document.body.appendChild(h1DOM)
+//   document.body.appendChild(h1DOM) 
 
 //   // React -> React-DOM
 //   //React.createElement(type, props, children, n)
@@ -119,7 +119,7 @@ liDOM2.innerText = 'React'
 
 ulDOM.appendChild(liDOM1)
 ulDOM.appendChild(liDOM2)
-document.body.appendChild(ulDOM)
+document.body.appendChild(ulDOM)  //này là get phần tử ul vào trong body
 
 // React
 const ulReact = React.createElement(
@@ -136,5 +136,3 @@ console.log(ulReact)
 
 </body>
 </html>
-
- 

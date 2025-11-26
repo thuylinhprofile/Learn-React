@@ -4,7 +4,7 @@
 // export default logger;  //export+default+ để xuất hàm 'logger' ra ngoài
 //VD2 về modules VÀ 1 MODULES CHỈ DEFAULT ĐƯỢC 1 LẦN THÔI.
 
-import {TYPE_LOG} from '../constants.js'; //VD3(13)
+import {TYPE_LOG} from './constants.js'; //VD3(13)
 function logger (log, type=TYPE_LOG){     // VD3(13)
  }
 // import logger from './logger/index.js'; //import default bình thường vì bên logger.js mình dùng export default
