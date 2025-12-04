@@ -284,6 +284,7 @@ function Add() {
     setM(a * b * c * d * e);
   };
 
+
   // const handleSum = (e) => {
   //   // vì dùng form onSubmit nên bắt buộc phải dùng e.
   //   e.preventDefault(); //event handler ngăn form reload
@@ -426,6 +427,7 @@ export default Add;
 // const handleSubmit =() => {
 
 //   console.log(checked);
+//   // const handleCheck 
 // }
 //  return (
 //   <div style={{ padding: 32}}>
@@ -460,3 +462,28 @@ export default Add;
 // }
 
 // export default App
+
+
+
+
+//use Effect
+// Events: Add / remove event listener
+// Observer pattern: Subscribe / unsubscribe
+// Closure
+// Timers: setInterval, setTimeout, clearInterval, clearTimeout
+// useState
+// Mounted / unmounted
+// ===
+// Call API
+
+/**
+1. Update DOM
+   - F8 blog title
+2. Call API
+3. Listen DOM events
+   - Scroll
+   - Resize
+4. Cleanup
+   - Remove listener / Unsubscribe
+   - Clear timer
+*/
