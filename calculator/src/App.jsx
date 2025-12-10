@@ -300,7 +300,7 @@
 //       name: `khoa hoc : ${course.name}`, //${course.name} là name cũ, name là tên mới
 //       coin: course.coin,
 //       coinText: `Gia: ${course.coin}`,
-//       index: index, 
+//       index: index,
 //       originArray: courses,
 //     };
 //   }
@@ -311,17 +311,17 @@
 // export default App;
 //làm bài tạo mảng a gồm các phần tử 1-->5
 // mảng b có các mảng a+2
-function App() {
- 
-const a = [1, 2, 3, 4, 5];
+// function App() {
 
-// mảng b gồm các phần tử của a + 2
-const b = a.map(a => a + 2);
+// const a = [1, 2, 3, 4, 5];
 
-console.log( 'mang a=', a);
-console.log('mang b=', b);
-}
-export default App;
+// // mảng b gồm các phần tử của a + 2
+// const b = a.map(a => a + 2);
+
+// console.log( 'mang a=', a);
+// console.log('mang b=', b);
+// }
+// export default App;
 // map() hoạt động như sau:
 
 // map sẽ duyệt từng phần tử của mảng a (gồm 5 phần tử)
@@ -329,3 +329,200 @@ export default App;
 // Với mỗi phần tử, nó thực hiện hàm a => a + 2
 
 // Rồi trả về một mảng mới
+
+//10/12/2025
+//Bài tập: Dark / Light Theme Toggle:
+// Mục tiêu:
+// Nhấn nút → chuyển theme Light ↔ Dark
+// Nền đổi màu
+// Chữ đổi màu
+// Sử dụng useState
+
+// import { useState } from "react";
+
+// function App() {
+//   // 1. Tạo state để lưu theme
+//   const [theme, setTheme] = useState("light");
+
+//   // 2. Hàm đổi theme qua lại: Nếu theme là light → đổi sang dark
+//                             // Nếu theme là dark → đổi sang light
+//   const toggleTheme = () => {
+//     if (theme === "light") {
+//       setTheme("dark");   // Nếu đang light → chuyển sang dark
+//     } else {
+//       setTheme("light");  // Nếu đang dark → chuyển về light
+//     }
+//   };
+
+//   // 3. Làm style cho cả trang dựa trên theme
+//   const appStyle = {
+//     height: "100vh",      // cho full màn hình
+//     padding: 20,          // cách mép cho đẹp
+
+//     // Nếu theme đứng bên trái là "light" ⇒ dùng giá trị đầu
+//     // Nếu không phải (tức là "dark") ⇒ dùng giá trị sau
+//     backgroundColor: theme === "light" ? "white" : "black", //Nếu theme === "light" thì dùng "white", Còn nếu không phải, thì dùng "black"
+//     color: theme === "light" ? "black" : "white",  // nếu light → nền trắng, nếu dark → nền đen
+//     // đổi màu chữ theo theme
+
+//     // transition: "0.3s",   // đổi màu mượt mượt
+//   };
+
+//   // 4. UI trả ra màn hình
+//   return (
+//     <div style={appStyle}>
+//       <h1>Dark / Light Theme</h1>
+
+//       {/* Hiển thị theme hiện tại */}
+//       <p>Theme hiện tại: {theme}</p>
+
+//      {/* nút bấm đổi theme */}
+//       <button onClick={toggleTheme}>
+//         Đổi theme
+//       </button>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//bài 9: bấm nút để đổi ảnh
+// import { useState } from "react";
+
+// function App() {
+//   // 1. State để lưu ảnh hiện tại
+//   const [image, setImage] = useState("img1");
+
+//   // 2. Hàm đổi ảnh
+//   const changeImage = () => {
+//     if (image === "img1") {
+//       setImage("img2"); // đổi qua ảnh 2
+//     } else {
+//       setImage("img1"); // đổi lại ảnh 1
+//     }
+//   };
+
+//   // 3. Chọn link ảnh dựa trên state
+//   let imageUrl = "";
+//   if (image === "img1") {
+//     imageUrl = "https://thichtrangtri.com/wp-content/uploads/2025/05/anh-phong-canh-chill-22.jpg"; // ảnh 1
+//   } else {
+//     imageUrl = "https://thichtrangtri.com/wp-content/uploads/2025/05/anh-phong-canh-chill-17.jpg"; // ảnh 2
+//   }
+
+//   return (
+//     <div style={{ padding: 40 }}>
+//       <h1>Đổi ảnh bằng nút bấm</h1>
+
+//       {/* Hiển thị ảnh */}
+//       <img
+//         src={imageUrl}
+//         alt="random"
+//         style={{ width: 350, borderRadius: 10 }}
+//       />
+
+//       <br />
+
+//       {/* Nút đổi ảnh */}
+//       <button
+//         onClick={changeImage}
+//         style={{ marginTop: 20, padding: "10px 20px" }}
+//       >
+//         Đổi ảnh
+//       </button>
+//     </div>
+//   );
+// }
+
+// export default App;
+//like fb tăng:
+// import { useState } from "react";
+
+// function App() {
+//   const [likes, setLikes] = useState(0);
+
+//   const handleLike = () => {
+//     setLikes(likes + 1);
+//   };
+
+//   return (
+//     <div style={{ padding: "20px", fontSize: "24px" }}>
+//       <button onClick={handleLike} style={{ padding: "10px 20px" }}>
+//         Like
+//       </button>
+
+//       <p>Likes: {likes}</p>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// cái khó hơn của 
+import { useState } from 'react';
+
+function UserProfileManager() {
+  
+  // Bước 1: Khai báo State là một Object (đối tượng)
+  const [user, setUser] = useState({
+    hoVaTen: '',
+    tuoi: 0,
+    email: ''
+  });
+
+  // Bước 2: Hàm xử lý chung khi người dùng gõ vào bất kỳ ô Input nào
+  const handleChange = (e) => {
+    
+    // Viết gọn: Lấy name (tên trường) và value (giá trị mới)
+    const { name, value } = e.target;
+    
+    // Cập nhật Object State
+    setUser(prevUser => ({
+        // Bắt buộc: Sao chép các trường cũ (hoVaTen, tuoi, email)
+        ...prevUser, 
+        
+        // Cập nhật trường hiện tại: [hoVaTen]: 'Giá trị mới'
+        [name]: value
+    }));
+  };
+
+  return (
+    <div style={{ marginTop: '20px', border: '1px solid black', padding: '15px' }}>
+      <h3>Form Nhập Thông Tin Cá Nhân</h3>
+      
+      {/* Input 1: Họ và Tên */}
+      <label>Họ và Tên: </label>
+      <input
+        type="text"
+        name="hoVaTen" 
+        value={user.hoVaTen} 
+        onChange={handleChange}
+        placeholder="Nhập tên"
+      />
+      
+      {/* Input 2: Tuổi */}
+      <label>Tuổi: </label>
+      <input
+        type="number"
+        name="tuoi" 
+        value={user.tuoi}
+        onChange={handleChange}
+        placeholder="Nhập tuổi"
+      />
+      
+      {/* Input 3: Email */}
+      <label>Email: </label>
+      <input
+        type="email"
+        name="email" 
+        value={user.email}
+        onChange={handleChange}
+        placeholder="Nhập email"
+      />
+      <p style={{ color: 'red', marginTop: '10px' }}>
+      </p>
+    </div>
+  );
+}
+
+export default UserProfileManager;
