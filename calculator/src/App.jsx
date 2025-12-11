@@ -458,71 +458,69 @@
 
 // export default App;
 
-// cái khó hơn của 
-import { useState } from 'react';
+// cái khó hơn của quan ly ng dung( chưa xong, đang dở):
+// import { useState } from 'react';
 
-function UserProfileManager() {
-  
-  // Bước 1: Khai báo State là một Object (đối tượng)
-  const [user, setUser] = useState({
-    hoVaTen: '',
-    tuoi: 0,
-    email: ''
-  });
+// function UserProfileManager() {
+//   // Bước 1: Khai báo State là một Object (đối tượng)
+//   const [user, setUser] = useState({
+//     hoVaTen: '',
+//     tuoi: 0,
+//     email: ''
+//   });
+//   // Bước 2: Hàm xử lý chung khi người dùng gõ vào bất kỳ ô Input nào
+//   const handleChange = (e) => {
 
-  // Bước 2: Hàm xử lý chung khi người dùng gõ vào bất kỳ ô Input nào
-  const handleChange = (e) => {
-    
-    // Viết gọn: Lấy name (tên trường) và value (giá trị mới)
-    const { name, value } = e.target;
-    
-    // Cập nhật Object State
-    setUser(prevUser => ({
-        // Bắt buộc: Sao chép các trường cũ (hoVaTen, tuoi, email)
-        ...prevUser, 
-        
-        // Cập nhật trường hiện tại: [hoVaTen]: 'Giá trị mới'
-        [name]: value
-    }));
-  };
+//     // Viết gọn: Lấy name (tên trường) và value (giá trị mới)
+//     const { name, value } = e.target;
 
-  return (
-    <div style={{ marginTop: '20px', border: '1px solid black', padding: '15px' }}>
-      <h3>Form Nhập Thông Tin Cá Nhân</h3>
-      
-      {/* Input 1: Họ và Tên */}
-      <label>Họ và Tên: </label>
-      <input
-        type="text"
-        name="hoVaTen" 
-        value={user.hoVaTen} 
-        onChange={handleChange}
-        placeholder="Nhập tên"
-      />
-      
-      {/* Input 2: Tuổi */}
-      <label>Tuổi: </label>
-      <input
-        type="number"
-        name="tuoi" 
-        value={user.tuoi}
-        onChange={handleChange}
-        placeholder="Nhập tuổi"
-      />
-      
-      {/* Input 3: Email */}
-      <label>Email: </label>
-      <input
-        type="email"
-        name="email" 
-        value={user.email}
-        onChange={handleChange}
-        placeholder="Nhập email"
-      />
-      <p style={{ color: 'red', marginTop: '10px' }}>
-      </p>
-    </div>
-  );
-}
+//     // Cập nhật Object State
+//     setUser(prevUser => ({
+//         // Bắt buộc: Sao chép các trường cũ (hoVaTen, tuoi, email)
+//         ...prevUser,
 
-export default UserProfileManager;
+//         // Cập nhật trường hiện tại: [hoVaTen]: 'Giá trị mới'
+//         [name]: value
+//     }));
+//   };
+
+//   return (
+//     <div style={{ marginTop: '20px', border: '1px solid black', padding: '15px' }}>
+//       <h3>Form Nhập Thông Tin Cá Nhân</h3>
+
+//       {/* Input 1: Họ và Tên */}
+//       <label>Họ và Tên: </label>
+//       <input
+//         type="text"
+//         name="hoVaTen"
+//         value={user.hoVaTen}
+//         onChange={handleChange}
+//         placeholder="Nhập tên"
+//       />
+
+//       {/* Input 2: Tuổi */}
+//       <label>Tuổi: </label>
+//       <input
+//         type="number"
+//         name="tuoi"
+//         value={user.tuoi}
+//         onChange={handleChange}
+//         placeholder="Nhập tuổi"
+//       />
+
+//       {/* Input 3: Email */}
+//       <label>Email: </label>
+//       <input
+//         type="email"
+//         name="email"
+//         value={user.email}
+//         onChange={handleChange}
+//         placeholder="Nhập email"
+//       />
+//       <p style={{ color: 'red', marginTop: '10px' }}>
+//       </p>
+//     </div>
+//   );
+// }
+
+// export default UserProfileManager;
