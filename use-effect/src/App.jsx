@@ -192,23 +192,23 @@
 //   const [count, setCount] = useState("1");
 //   const [posts, setPosts] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("https://jsonplaceholder.typicode.com/posts")
-  //     .then((response) => response.json())
-  //     .then((json) => setPosts(json));
-  // }, []);
+// useEffect(() => {
+//   fetch("https://jsonplaceholder.typicode.com/posts")
+//     .then((response) => response.json())
+//     .then((json) => setPosts(json));
+// }, []);
 
-  // useEffect(callback, []) nó sẽ chỉ chạy hàm callback đúng 1 lần sau khi components được
-  // mounted vào DOM
+// useEffect(callback, []) nó sẽ chỉ chạy hàm callback đúng 1 lần sau khi components được
+// mounted vào DOM
 
-  // useEffect(callback, [deps]) nó sẽ chạy hàm callback lần đầu tiên khi components được
-  // mounted vào DOM
+// useEffect(callback, [deps]) nó sẽ chạy hàm callback lần đầu tiên khi components được
+// mounted vào DOM
 
-  // Nó sẽ lắng sự thay đổi của giá trị deps
+// Nó sẽ lắng sự thay đổi của giá trị deps
 // khi denpendent
-  // useEffect(() => {
-  //   console.log("re-render");
-  // }, []);
+// useEffect(() => {
+//   console.log("re-render");
+// }, []);
 
 //   useEffect(() => {
 //     console.log("re-render" + count);
@@ -228,95 +228,111 @@
 
 // export default App;
 //(callback, [deps]) f8: [deps] ở đây đơn giản chỉ là biến thôi
-// 3. Callback luôn được gọi lại mỗi khi deps thay đổi
-import React, { useEffect, useState } from "react";
+// // 3. Callback luôn được gọi lại mỗi khi deps thay đổi
+// import React, { useEffect, useState } from "react";
 
-function Content() {
-  const tabs = ['posts', 'comments', 'albums']; //React vẽ giao diện: Nó vẽ ra 3 cái nút. 
+// function Content() {
+//   const tabs = ["posts", "comments", "albums"]; //React vẽ giao diện: Nó vẽ ra 3 cái nút.
 
-  const [title, setTitle] = useState('');
-  const [posts, setPosts] = useState([]);
-  const [type, setType] = useState('posts'); //Lúc này type đang là 'posts' (giá trị mặc định).
+//   const [title, setTitle] = useState("");
+//   const [posts, setPosts] = useState([]);
+//   const [type, setType] = useState("posts"); //Lúc này type đang là 'posts' (giá trị mặc định).
 
-  useEffect(() => {
-    // Effect sẽ chạy khi `type` thay đổi
-    console.log('Type changed: bắt đầu đi tải dữ liệu cho type', type); // khi render lần 1 nó chưa chạy ngay đâu, chỉ là note lại là có 1 cái effect ở đây
+//   useEffect(() => {
+//     // Effect sẽ chạy khi `type` thay đổi
+//     console.log("Type changed: bắt đầu đi tải dữ liệu cho type", type); // khi render lần 1 nó chưa chạy ngay đâu, chỉ là note lại là có 1 cái effect ở đây
 
-    // gọi API theo type
-    // Cấu trúc chuẩn: useEffect( callback_function, dependency_array là cái [type] đó)
-    fetch(`https://jsonplaceholder.typicode.com/${type}`)// Gọi API theo cái 'type' hiện tại
-      .then(res => res.json()) //.then nghĩa là sau khi server trả lời xong, thì làm việc này,...
-      //Nếu không có .then, JavaScript sẽ chạy tuột xuống dưới luôn trong khi dữ liệu chưa về -> Lỗi undefined.
-      //Tại sao setPosts(posts) lại nằm trong .then?:
-    // Vì chỉ khi nào có dữ liệu (data) về tay rồi, ta mới được phép cập nhật vào State để vẽ lên màn hình.
-      .then(posts => { 
-        setPosts(posts);
-        console.log("2.đã tải xong và lưu dữ liệu")
-      })
-      .catch(err => {
-        console.error('Fetch error', err);
-        setPosts([]);
-      });
-  }, [type]); // <-- quan trọng: dependency là type, là react lôi" sổ tay" ra so sánh: giá trị type cũ lần render trước là'posts'
-  // và giá trị type mới(vừa render xong):'comment'--> đánh dấu cái effect này cần phải chạy lại sau khi vẽ xong giao diện
+//     // gọi API theo type
+//     // Cấu trúc chuẩn: useEffect( callback_function, dependency_array là cái [type] đó)
+//     fetch(`https://jsonplaceholder.typicode.com/${type}`) // Gọi API theo cái 'type' hiện tại
+//       .then((res) => res.json()) //.then nghĩa là sau khi server trả lời xong, thì làm việc này,...
+//       //Nếu không có .then, JavaScript sẽ chạy tuột xuống dưới luôn trong khi dữ liệu chưa về -> Lỗi undefined.
+//       //Tại sao setPosts(posts) lại nằm trong .then?:
+//       // Vì chỉ khi nào có dữ liệu (data) về tay rồi, ta mới được phép cập nhật vào State để vẽ lên màn hình.
+//       .then((posts) => {
+//         setPosts(posts);
+//         console.log("2.đã tải xong và lưu dữ liệu");
+//       })
+//       .catch((err) => {
+//         console.error("Fetch error", err);
+//         setPosts([]);
+//       });
+//   }, [type]); // <-- quan trọng: dependency là type, là react lôi" sổ tay" ra so sánh: giá trị type cũ lần render trước là'posts'
+//   // và giá trị type mới(vừa render xong):'comment'--> đánh dấu cái effect này cần phải chạy lại sau khi vẽ xong giao diện
 
-  return (
-    <div style={{ padding: 12 }}>
-      <div style={{ marginBottom: 8 }}>
-        <button onClick={() => setTitle(prev => prev ? '' : 'Hoc lap trinh tai F8')}>Toggle</button>
-      </div>
+//   return (
+//     <div style={{ padding: 12 }}>
+//       <div style={{ marginBottom: 8 }}>
+//         <button
+//           onClick={() =>
+//             setTitle((prev) => (prev ? "" : "Hoc lap trinh tai F8"))
+//           }
+//         >
+//           Toggle
+//         </button>
+//       </div>
 
-      <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 12 }}>
-        {tabs.map(tab => (
-          <button
-            key={tab}
-            style={ type === tab ? { color: '#fff', backgroundColor: '#333' } : {} }
-            onClick={() => setType(tab)}
-          >
-            {tab}
-          </button>
-        ))}
+//       <div
+//         style={{
+//           display: "flex",
+//           gap: 6,
+//           alignItems: "center",
+//           marginBottom: 12,
+//         }}
+//       >
+//         {tabs.map((tab) => (
+//           <button
+//             key={tab}
+//             style={
+//               type === tab ? { color: "#fff", backgroundColor: "#333" } : {}
+//             }
+//             onClick={() => setType(tab)}
+//           >
+//             {tab}
+//           </button>
+//         ))}
 
-        {/* input để thay đổi title (ví dụ video có input) */}
-        <input
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          placeholder="Type a title..."
-          style={{ marginLeft: 8 }}
-        />
-      </div>
+//         {/* input để thay đổi title (ví dụ video có input) */}
+//         <input
+//           value={title}
+//           onChange={(e) => setTitle(e.target.value)}
+//           placeholder="Type a title..."
+//           style={{ marginLeft: 8 }}
+//         />
+//       </div>
 
-      <div>
-        <h3>{type}</h3>
-        {/* hiển thị posts / comments / albums */}
-        <ul>
-          {posts && posts.length > 0 ? (
-            posts.slice(0, 20).map(item => (
-              <li key={item.id}>
-                {/* nhiều endpoint có trường khác nhau, ưu tiên title rồi name rồi body */}
-                {item.title || item.name || item.body || JSON.stringify(item)}
-              </li>
-            ))
-          ) : (
-            <li>No data</li>
-          )}
-        </ul>
-      </div>
-    </div>
-  );
-}
+//       <div>
+//         <h3>{type}</h3>
+//         {/* hiển thị posts / comments / albums */}
+//         <ul>
+//           {posts && posts.length > 0 ? (
+//             posts.slice(0, 20).map((item) => (
+//               <li key={item.id}>
+//                 {/* nhiều endpoint có trường khác nhau, ưu tiên title rồi name rồi body */}
+//                 {item.title || item.name || item.body || JSON.stringify(item)}
+//               </li>
+//             ))
+//           ) : (
+//             <li>No data</li>
+//           )}
+//         </ul>
+//       </div>
+//     </div>
+//   );
+// }
 
-export default function App() {
-  return <Content />;
-}
+// export default function App() {
+//   return <Content />;
+// }
+
 // //useState là nhớ, để nhớ
 // ví dụ đi
 // useState (Trí nhớ): Giúp robot nhớ được nó đang mặc áo màu gì, trong túi có bao nhiêu tiền.
 
 // Ví dụ: const [tien, setTien] = useState(0);
 
-// Vấn đề: Khi robot nhớ ra là "Hết tiền rồi", 
-// nó phải làm hành động là "Đi rút tiền". 
+// Vấn đề: Khi robot nhớ ra là "Hết tiền rồi",
+// nó phải làm hành động là "Đi rút tiền".
 // Hành động "Đi rút tiền" này chính là Side Effect.
 // Nếu t viết code "Đi rút tiền" khơi khơi trong component thì con robot sẽ bị điên: cứ mỗi mili-giây nó lại chạy ra cây ATM một lần (Re-render liên tục).
 
@@ -328,4 +344,104 @@ export default function App() {
 
 // Về tham số Em truyền [type] vào dependency array. Ý nghĩa là: Chỉ khi nào người dùng đổi loại tab (biến type thay đổi), thì mới gọi API mới.
 
-// Về logic chạy: "Khi type thay đổi, useEffect chạy hàm fetch. Sau khi fetch thành công (trong .then), t mới setPosts để cập nhật dữ liệu và hiển thị ra UI. Việc này đảm bảo dữ liệu luôn đồng bộ với tab đang chọn."
+// Về logic chạy: "Khi type thay đổi, useEffect chạy hàm fetch. Sau khi fetch thành công (trong .then), t mới setPosts để cập nhật dữ liệu và hiển thị ra UI. Việc này
+//  đảm bảo dữ liệu luôn đồng bộ với tab đang chọn."
+
+// // deps của f8
+// import React, { useState, useEffect } from "react";
+// function Content() {
+//   const tabs = ["posts", "comments", "albums"];
+
+//   const [posts, setPosts] = useState([]);
+//   const [type, setType] = useState("posts");
+//   const [ShowGoToTop, setShowGoToTop] = useState(false); // de gia tri mac dinh se la true hoac false tuy ra setup
+
+//   useEffect(() => {
+//     console.log("dữ liệ type đang cập nhật:", type);
+
+//     // gọi API theo type
+//     // Cấu trúc chuẩn: useEffect( callback_function, dependency_array là cái [type] đó)
+//     fetch(`https://jsonplaceholder.typicode.com/${type}`) // Gọi API theo cái 'type' hiện tại
+//       .then((res) => res.json()) //.then nghĩa là sau khi server trả lời xong, thì làm việc này,...
+//       //Nếu không có .then, JavaScript sẽ chạy tuột xuống dưới luôn trong khi dữ liệu chưa về -> Lỗi undefined.
+//       //Tại sao setPosts(posts) lại nằm trong .then?:
+//       // Vì chỉ khi nào có dữ liệu (data) về tay rồi, ta mới được phép cập nhật vào State để vẽ lên màn hình.
+//       .then((posts) => {
+//         setPosts(posts);
+//         console.log("2.đã tải xong và lưu dữ liệu");
+//       });
+//   }, [type]); // <-- quan trọng: dependency là type, là react lôi" sổ tay" ra so sánh: giá trị type cũ lần render trước là'posts'
+//   // và giá trị type mới(vừa render xong):'comment'--> đánh dấu cái effect này cần phải chạy lại sau khi vẽ xong giao diện
+//   useEffect(() => {
+//     const handleScroll = () => {
+//       console.log(window.scrollY);
+//       if (window.scrollY >= 200) {
+//         //show: hiện ra thì để true
+//         setShowGoToTop(true);
+//       } else {
+//         //hide, ẩn đi thì hiện là false
+//         setShowGoToTop(false);
+//       }
+//     };
+//     window.addEventListener("scroll", handleScroll);
+//   }, []);
+//   console.log("re-render");
+//   return (
+//     <div>
+//       {tabs.map((tab) => (
+//         <button
+//           key={tab}
+//           style={
+//             type === tab
+//               ? {
+//                   color: "#fff",
+//                   backgroundColor: "#333",
+//                 }
+//               : {}
+//           }
+//           onClick={() => setType(tab)}
+//         >
+//           {tab}
+//         </button>
+//       ))}
+
+//       {posts.map((post) => (
+//         <li key={post.id}>{post.title || post.name}</li> // dùng post.id làm khóa định danh. Nhưng lỡ mà bài viết này không có id (bị lỗi hay thiếu dữ liệu), thì hãy dùng tạm post.title làm khóa
+//       ))}
+//       {ShowGoToTop && (
+//         <button
+//           style={{
+//             position: "fixed",
+//             right: 20,
+//             bottom: 20,
+//           }}
+//         >
+//           Go to top
+//         </button>
+//       )}
+//     </div>
+//   );
+// }
+// export default Content;
+import { useEffect, useState } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setCount(count + 1);
+    }, 1000);
+
+    // cleanup
+    return () => clearTimeout(timerId);
+  }, [count]);
+
+  return (
+    <div>
+      <h1>{count}</h1>
+    </div>
+  );
+}
+
+export default App;
