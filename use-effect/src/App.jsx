@@ -357,7 +357,7 @@
 //   const [ShowGoToTop, setShowGoToTop] = useState(false); // de gia tri mac dinh se la true hoac false tuy ra setup
 
 //   useEffect(() => {
-//     console.log("dữ liệ type đang cập nhật:", type);
+//     console.log("dữ liệu type đang cập nhật:", type);
 
 //     // gọi API theo type
 //     // Cấu trúc chuẩn: useEffect( callback_function, dependency_array là cái [type] đó)
@@ -422,24 +422,708 @@
 //     </div>
 //   );
 // }
-// export default Content;
+// // export default Content;
+// import { useEffect, useState } from "react";
+
+// function App() {
+//   const [count, setCount] = useState(0);
+
+//   useEffect(() => {
+//     const timerId = setTimeout(() => {
+//       setCount(count + 1);
+//     }, 1000);
+
+//     // cleanup
+//     return () => clearTimeout(timerId);
+//   }, [count]);
+
+//   return (
+//     <div>
+//       <h1>{count}</h1>
+//     </div>
+//   );
+// }
+
+// export default App;
+// Side effects
+// test:
+// Import 2 hook cơ bản từ React
+// useState: lưu dữ liệu thay đổi theo thời gian
+// useEffect: chạy code theo vòng đời component
+
+// //test quản lý nhân viên:
+// import { useEffect, useState } from 'react';
+
+// function App() {
+
+//   // ======================
+//   // STATE DANH SÁCH NHÂN VIÊN
+//   // ======================
+
+//   //  KHÔNG truyền giá trị ban đầu
+//   // → employees ban đầu = undefined
+//   // → mục đích: dùng useEffect để khởi tạo lần đầu
+//   const [employees, setEmployees] = useState();
+
+//   // ======================
+//   // STATE CHO FORM NHẬP
+//   // ======================
+
+//   // Lưu tên người dùng nhập
+//   const [name, setName] = useState('');
+
+//   // Lưu năm sinh người dùng nhập
+//   const [birthYear, setBirthYear] = useState('');
+
+//   // Lưu giới tính đang chọn
+//   const [gender, setGender] = useState('Nam');
+
+//   // ======================
+//   // useEffect: CHẠY 1 LẦN KHI COMPONENT MOUNT
+//   // ======================
+
+//   useEffect(() => {
+//     // Dữ liệu nhân viên ban đầu (fake data)
+//     const data = [
+//       { id: 1, name: 'An', birthYear: 2000, gender: 'Nam' },
+//       { id: 2, name: 'Bình', birthYear: 1999, gender: 'Nữ' },
+//     ];
+
+//     // Lấy năm hiện tại (vd: 2025)
+//     const currentYear = new Date().getFullYear();
+
+//     // map: duyệt từng nhân viên
+//     // → thêm thuộc tính age cho mỗi người
+//     const dataWithAge = data.map((item) => ({
+//       ...item, // giữ nguyên id, name, birthYear, gender
+//       age: currentYear - item.birthYear, // tính tuổi
+//     }));
+
+//     // Cập nhật state employees
+//     // → trigger component render lại
+//     setEmployees(dataWithAge);
+
+//   }, []);
+//   // [] = dependency array rỗng
+//   // → useEffect chỉ chạy 1 lần duy nhất
+//   // → giống componentDidMount
+
+//   // ======================
+//   // HÀM THÊM NHÂN VIÊN
+//   // ======================
+
+//   const handleAdd = () => {
+
+//     // Nếu chưa nhập đủ dữ liệu → chặn
+//     if (!name || !birthYear) {
+//       alert('Vui lòng nhập đủ thông tin');
+//       return; // dừng hàm
+//     }
+
+//     // Lấy năm hiện tại
+//     const currentYear = new Date().getFullYear();
+
+//     // Tạo object nhân viên mới
+//     const newEmployee = {
+//       id: Date.now(), // tạo id duy nhất
+//       name: name, // tên từ input
+//       birthYear: Number(birthYear), // ép kiểu string → number
+//       gender: gender, // giới tính
+//       age: currentYear - birthYear, // tính tuổi
+//     };
+
+//     // setEmployees với callback
+//     // prev = danh sách cũ
+//     // → tạo mảng mới, KHÔNG sửa mảng cũ
+//     setEmployees((prev) => [...prev, newEmployee]);
+
+//     // Reset form sau khi thêm
+//     setName('');
+//     setBirthYear('');
+//     setGender('Nam');
+//   };
+
+//   // ======================
+//   // HÀM XOÁ NHÂN VIÊN
+//   // ======================
+
+//   const handleDelete = (id) => {
+
+//     // filter: tạo mảng mới
+//     // → loại bỏ nhân viên có id trùng
+//     setEmployees((prev) =>
+//       prev.filter((item) => item.id !== id)
+//     );
+//   };
+
+//   // ======================
+//   // CHẶN LỖI KHI CHƯA CÓ DATA
+//   // ======================
+
+//   // Lần render đầu:
+//   // employees === undefined
+//   // → không được map()
+//   if (!employees) {
+//     return <p>Đang tải dữ liệu...</p>;
+//   }
+
+//   // ======================
+//   // JSX RENDER GIAO DIỆN
+//   // ======================
+
+//   return (
+//     <div>
+
+//       <h2>Quản lý nhân viên</h2>
+
+//       {/* FORM NHẬP */}
+//       <div>
+//         {/* Input tên */}
+//         <input
+//           placeholder="Tên"
+//           value={name} // giá trị lấy từ state
+//           onChange={(e) => setName(e.target.value)}
+//           // mỗi lần gõ → cập nhật state
+//         />
+
+//         {/* Input năm sinh */}
+//         <input
+//           placeholder="Năm sinh"
+//           value={birthYear}
+//           onChange={(e) => setBirthYear(e.target.value)}
+//         />
+
+//         {/* Select giới tính */}
+//         <select
+//           value={gender}
+//           onChange={(e) => setGender(e.target.value)}
+//         >
+//           <option>Nam</option>
+//           <option>Nữ</option>
+//         </select>
+
+//         {/* Nút thêm */}
+//         <button onClick={handleAdd}>
+//           Thêm
+//         </button>
+//       </div>
+
+//       {/* DANH SÁCH NHÂN VIÊN */}
+//       <ul>
+//         {employees.map((item) => (
+//           <li key={item.id}>
+//             {item.name} - {item.age} tuổi - {item.gender}
+
+//             <button onClick={() => handleDelete(item.id)}>
+//               Xoá
+//             </button>
+//           </li>
+//         ))}
+//       </ul>
+
+//     </div>
+//   );
+// }
+
+// export default App;
+
+//end test
+
+// Events: Add / remove event listener
+// Observer pattern: Subscribe / unsubscribe
+// Closure
+// Timers: setInterval, setTimeout, clearInterval, clearTimeout
+// useState
+// Mounted / unmounted
+// ===
+// Call API
+
+/**
+1. Update DOM
+    - F8 blog title
+2. Call API
+3. Listen DOM events
+    - Scroll
+    - Resize
+4. Cleanup
+    - Remove listener / Unsubscribe
+    - Clear timers
+*/
+
+// 1. useEffect(callback)
+// - Gọi callback mỗi khi component re-render
+// - Gọi callback sau khi component thêm element vào DOM
+
+// 2. useEffect(callback, [])
+// - Chỉ gọi callback 1 lần sau khi component mounted
+
+// 3. useEffect(callback, [deps])
+// - Callback sẽ được gọi lại mỗi khi deps thay đổi
+
+// ------------
+// 1. Callback luôn được gọi sau khi component mounted
+// 2. Cleanup function luôn được gọi trước khi component unmounted
+// // 3. Cleanup function luôn được gọi trước khi callback được gọi (trừ lần mount đầu tiên)import { useState } from 'react';
+// import { useState } from 'react';
+
+// const lessons = [
+//   { id: 1, name: 'ReactJS là gì? Tại sao nên học ReactJS?' },
+//   { id: 2, name: 'SPA/MPA là gì?' },
+//   { id: 3, name: 'Arrow function' },
+// ];
+
+// function App() {
+//   const [lessonId, setLessonId] = useState(1);
+
+//   return (
+//     <div>
+//       <ul>
+//         {lessons.map((lesson) => (
+//           <li
+//             key={lesson.id}
+//             style={{
+//               color: lessonId === lesson.id ? 'red' : '#333',
+//               cursor: 'pointer',
+//             }}
+//             onClick={() => setLessonId(lesson.id)}
+//           >
+//             {lesson.name}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// import { useEffect, useState } from 'react';
+
+// function App() {
+//   // KHÔNG gán giá trị ban đầu
+//   const [employees, setEmployees] = useState();
+
+//   // State cho form nhập
+//   const [name, setName] = useState('');
+//   const [birthYear, setBirthYear] = useState('');
+//   const [gender, setGender] = useState('Nam');
+
+//   // Khởi tạo dữ liệu lần đầu
+//   useEffect(() => {
+//     const data = [
+//       { id: 1, name: 'Phương', birthYear: 2000, gender: 'Nam' },
+//       { id: 2, name: 'Mai', birthYear: 1999, gender: 'Nữ' },
+//     ];
+
+//     const currentYear = new Date().getFullYear();
+
+//     const dataWithAge = data.map((item) => ({
+//       ...item,
+//       age: currentYear - item.birthYear,
+//     }));
+
+//     setEmployees(dataWithAge);
+//   }, []);
+
+//   // Thêm nhân viên
+//   const handleAdd = () => {
+//     if (!name || !birthYear) {
+//       alert('Vui lòng nhập đủ thông tin');
+//       return;
+//     }
+
+//     const currentYear = new Date().getFullYear();
+
+//     const newEmployee = {
+//       id: Date.now(),
+//       name: name,
+//       birthYear: Number(birthYear),
+//       gender: gender,
+//       age: currentYear - birthYear,
+//     };
+
+//     setEmployees((prev) => [...prev, newEmployee]);
+
+//     // Reset form
+//     setName('');
+//     setBirthYear('');
+//     setGender('Nam');
+//   };
+
+//   // Xoá nhân viên
+//   const handleDelete = (id) => {
+//     setEmployees((prev) => prev.filter((item) => item.id !== id));
+//   };
+
+//   // Chặn lỗi lúc chưa có dữ liệu
+//   if (!employees) {
+//     return <p>Đang tải dữ liệu...</p>;
+//   }
+
+//   return (
+//     <div>
+//       <h2>Quản lý nhân viên</h2>
+
+//       {/* FORM NHẬP */}
+//       <div>
+//         <input
+//           placeholder="Tên"
+//           value={name}
+//           onChange={(e) => setName(e.target.value)}
+//         />
+
+//         <input
+//           placeholder="Năm sinh"
+//           value={birthYear}
+//           onChange={(e) => setBirthYear(e.target.value)}
+//         />
+
+//         <select
+//           value={gender}
+//           onChange={(e) => setGender(e.target.value)}
+//         >
+//           <option>Nam</option>
+//           <option>Nữ</option>
+//         </select>
+
+//         <button onClick={handleAdd}>Thêm</button>
+//       </div>
+
+//       {/* DANH SÁCH */}
+//       <ul>
+//         {employees.map((item) => (
+//           <li key={item.id}>
+//             {item.name} - {item.age} tuổi - {item.gender}
+//             <button onClick={() => handleDelete(item.id)}>Xoá</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+// export default App;
+// //bài tập a Thiện để nhập a mà b cũng nhập theo:
+// import { useEffect, useState } from 'react';
+
+// function App() {
+//   const [valueA, setValueA] = useState('');
+//   const [valueB, setValueB] = useState('');
+
+//   // - Lắng nghe [valueA] thay đổi
+//   // - Cập nhật B bằng giá trị valueA , callback sẽ được goị lại mỗi khi deps thay đổi
+//   useEffect(() => {
+//     setValueB(valueA);
+//   }, [valueA]);
+// //   lấy giá trị của A đắp sang cho B.
+
+// // Phần Điều kiện (Deps Array): [valueA]
+// //bài tập anh Thiện:
+//  console.log("re-render");
+
+//   return (
+//     <div>
+//       <h2>FORM NHẬP A,B: </h2>
+//       <div>
+//         <input
+//           type='text'
+//           placeholder="nhập giá trị a"
+//           value={valueA}
+//           onChange={(e) => setValueA(e.target.value)} // setA xong nó chạy useEffect vì [deps] đang là valueA nên khi A thay đổi useEffect sẽ chạy lại và cập nhật setValueB(valueA); là B có giá trị của A
+//         />
+
+//         <input
+//           type='text'
+//           placeholder="nhập giá trị b"
+//           value={valueB}
+
+//           onChange={(e) => setValueB(e.target.value)}
+//         />
+
+//         {/*  Truyền valueA vào */}
+//         <button onClick={() => setValueB(valueA)}>ADD</button>
+//       </div>
+//     </div>
+//   );
+// }
+// export default App;
+
+// import { useEffect, useState } from 'react';
+
+// function App() {
+//   // KHÔNG gán giá trị ban đầu
+//   const [employees, setEmployees] = useState();
+
+//   // State cho form nhập
+//   const [name, setName] = useState('');
+//   const [birthYear, setBirthYear] = useState('');
+//   const [gender, setGender] = useState('Nam');
+
+//   // Khởi tạo dữ liệu lần đầu
+//   useEffect(() => {
+//     const data = [
+//       { id: 1, name: 'Phương', birthYear: 2000, gender: 'Nam' },
+//       { id: 2, name: 'Mai', birthYear: 1999, gender: 'Nữ' },
+//     ];
+
+//     const currentYear = new Date().getFullYear();
+
+//     const dataWithAge = data.map((item) => ({
+//       ...item,
+//       age: currentYear - item.birthYear,
+//     }));
+
+//     setEmployees(dataWithAge);
+//   }, []);
+
+//   // Thêm nhân viên
+//   const handleAdd = () => {
+//     if (!name || !birthYear) {
+//       alert('Vui lòng nhập đủ thông tin');
+//       return;
+//     }
+
+//     const currentYear = new Date().getFullYear();
+
+//     const newEmployee = {
+//       id: Date.now(),
+//       name: name,
+//       birthYear: Number(birthYear),
+//       gender: gender,
+//       age: currentYear - birthYear,
+//     };
+
+//     setEmployees((prev) => [...prev, newEmployee]);
+
+//     // Reset form
+//     setName('');
+//     setBirthYear('');
+//     setGender('Nam');
+//   };
+
+//   // Xoá nhân viên
+//   const handleDelete = (id) => {
+//     setEmployees((prev) => prev.filter((item) => item.id !== id));
+//   };
+
+//   // Chặn lỗi lúc chưa có dữ liệu
+//   if (!employees) {
+//     return <p>Đang tải dữ liệu...</p>;
+//   }
+
+//   return (
+//     <div>
+//       <h2>Quản lý nhân viên</h2>
+
+//       {/* FORM NHẬP */}
+//       <div>
+//         <input
+//           placeholder="Tên"
+//           value={name}
+//           onChange={(e) => setName(e.target.value)}
+//         />
+
+//         <input
+//           placeholder="Năm sinh"
+//           value={birthYear}
+//           onChange={(e) => setBirthYear(e.target.value)}
+//         />
+
+//         <select
+//           value={gender}
+//           onChange={(e) => setGender(e.target.value)}
+//         >
+//           <option>Nam</option>
+//           <option>Nữ</option>
+//         </select>
+
+//         <button onClick={handleAdd}>Thêm</button>
+//       </div>
+
+//       {/* DANH SÁCH */}
+//       <ul>
+//         {employees.map((item) => (
+//           <li key={item.id}>
+//             {item.name} - {item.age} tuổi - {item.gender}
+//             <button onClick={() => handleDelete(item.id)}>Xoá</button>
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// }
+
+// export default App;
+// //bài tập a Thiện để nhập a mà b cũng nhập theo:
+// import { useEffect, useState } from 'react';
+
+// function App() {
+//   const [valueA, setValueA] = useState('');
+//   const [valueB, setValueB] = useState('');
+
+//   // - Lắng nghe [valueA] thay đổi
+//   // - Cập nhật B bằng giá trị valueA , callback sẽ được goị lại mỗi khi deps thay đổi
+//   useEffect(() => {
+//     setValueB(valueA);
+//   }, [valueA]);
+// //   lấy giá trị của A đắp sang cho B.
+
+// // Phần Điều kiện (Deps Array): [valueA]
+// //bài tập anh Thiện:
+//  console.log("re-render");
+
+//   return (
+//     <div>
+//       <h2>FORM NHẬP A,B: </h2>
+//       <div>
+//         <input
+//           type='text'
+//           placeholder="nhập giá trị a"
+//           value={valueA}
+//           onChange={(e) => setValueA(e.target.value)} // setA xong nó chạy useEffect vì [deps] đang là valueA nên khi A thay đổi useEffect sẽ chạy lại và cập nhật setValueB(valueA); là B có giá trị của A
+//         />
+
+//         <input
+//           type='text'
+//           placeholder="nhập giá trị b"
+//           value={valueB}
+
+//           onChange={(e) => setValueB(e.target.value)}
+//         />
+
+//         {/*  Truyền valueA vào */}
+//         <button onClick={() => setValueB(valueA)}>ADD</button>
+//       </div>
+//     </div>
+//   );
+// }
+// export default App;
+//baitappppppppppppppppppppppppppppppppppppp:
+
 import { useEffect, useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
+  //  KHÔNG truyền giá trị ban đầu
+  // → employees ban đầu = undefined
+  // → mục đích: dùng useEffect để khởi tạo lần đầu
+  const [employees, setEmployees] = useState([]);
+  // STATE CHO FORM NHẬP
+
+  const [name, setName] = useState("");
+
+  // Lưu năm sinh người dùng nhập
+  const [birthYear, setBirthYear] = useState("");
+
+  // Lưu giới tính đang chọn
+  const [gender, setGender] = useState("Nam");
+  // useEffect: CHẠY 1 LẦN KHI COMPONENT MOUNT
 
   useEffect(() => {
-    const timerId = setTimeout(() => {
-      setCount(count + 1);
-    }, 1000);
+    // Dữ liệu nhân viên ban đầu (fake data)
+    const data = [
+      { id: 1, name: "Hoàng", birthYear: 2000, gender: "Nam" },
+      { id: 2, name: "Vinh", birthYear: 1999, gender: "Nữ" },
+    ];
 
-    // cleanup
-    return () => clearTimeout(timerId);
-  }, [count]);
+    // Lấy năm hiện tại (vd: 2025)
+    const currentYear = new Date().getFullYear();
 
+    // map: duyệt từng nhân viên
+    // → thêm thuộc tính age cho mỗi người
+    const dataWithAge = data.map((item) => ({
+      //map dùng dữ liệu mới thì dùng
+      ...item, // giữ nguyên id, name, birthYear, gender
+      age: currentYear - item.birthYear, // tính tuổi
+    }));
+
+    // Cập nhật state employees là lưu mảng này vào state employees ấy
+    // → trigger component render lại
+    //employees không phải dữ liệu gốc, mà là:
+
+    // dữ liệu được suy ra (derive) từ birthYear
+    setEmployees(dataWithAge);
+  }, []);
+  // [] = dependency array rỗng
+  // → useEffect chỉ chạy 1 lần duy nhất
+  // → giống componentDidMount
+  // HÀM THÊM NHÂN VIÊN
+
+  const handleAdd = () => {
+    // Lấy năm hiện tại
+    const currentYear = new Date().getFullYear();
+
+    // Tạo object nhân viên mới
+    const newEmployee = {
+      id: Date.now(), // tạo id duy nhất( trả về số mili giây hiện tại-> luôn khác nhau)
+      name: name, // tên từ input
+      birthYear: Number(birthYear), // ép kiểu string → number
+      gender: gender, // giới tính
+      age: currentYear - Number(birthYear), // tính tuổi
+    };
+
+    // setEmployees với callback
+    // prev là State dsach cũ ngay trước khi update
+    // → tạo mảng mới, KHÔNG sửa mảng cũ( dùng khi cần thêm xoá sửa dựa vào state cũ)
+    setEmployees((prev) => [...prev, newEmployee]); //Lấy danh sách nhân viên cũ, rồi thêm nhân viên mới vào, sau đó lưu lại danh sách mới thì prev = danh sách cũ
+
+    // Reset form sau khi thêm
+    setName("");
+    setBirthYear("");
+    setGender("Nam");
+  };
+
+  // HÀM XOÁ NHÂN VIÊN
+  const handleDelete = (id) => {
+    // filter: tạo mảng mới
+    // → loại bỏ nhân viên có id trùng
+    setEmployees((prev) => prev.filter((item) => item.id !== id));
+  };
+  //giao diện:
   return (
     <div>
-      <h1>{count}</h1>
+      <h2>Quản lý nhân viên</h2>
+
+      {/* FORM NHẬP */}
+      <div>
+        {/* Input tên */}
+        <input
+          placeholder="Tên"
+          value={name} // giá trị lấy từ state
+          onChange={(e) => setName(e.target.value)}
+          // mỗi lần gõ → cập nhật state
+        />
+
+        {/* Input năm sinh */}
+        <input
+          placeholder="Năm sinh"
+          value={birthYear}
+          onChange={(e) => setBirthYear(e.target.value)}
+        />
+
+        {/* Select giới tính */}
+        <select value={gender} onChange={(e) => setGender(e.target.value)}>
+          <option>Nam</option>
+          <option>Nữ</option>
+        </select>
+
+        {/* Nút thêm */}
+        <button onClick={handleAdd}>Thêm</button>
+      </div>
+
+      {/* DANH SÁCH NHÂN VIÊN */}
+      <ul>
+        {employees.map(
+          (
+            item //item này là employee 1 nvien trong mảng, như nhau
+          ) => (
+            // hoặc viết employee.id
+            <li key={item.id}>
+              {item.name} - {item.age} tuổi - {item.gender}
+              <button onClick={() => handleDelete(item.id)}>Xoá</button>
+            </li>
+          )
+        )}
+      </ul>
     </div>
   );
 }
